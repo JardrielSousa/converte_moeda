@@ -53,12 +53,42 @@ class _HomeStateState extends State<HomeState> {
       _clearAll();
       return;
     }
+    if(text == "." || text == ","){
+      final snackBar =  SnackBar(
+        content: const Text('Retorno Inválido!Digite novamente!'),
+        action: SnackBarAction(
+          label: 'X',
+          onPressed: () {
+            // Some code to undo the change.
+          },
+        ),
+
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      _clearAll();
+      return;
+    }
     double real = double.parse(text);
     dolarController.text = (real/dolar).toStringAsFixed(2);
     euroController.text = (real/euro).toStringAsFixed(2);
   }
   void _dolarChanged(String text){
     if(text.isEmpty) {
+      _clearAll();
+      return;
+    }
+    if(text == "." || text == ","){
+      final snackBar =  SnackBar(
+        content: const Text('Retorno Inválido!Digite novamente!'),
+        action: SnackBarAction(
+          label: 'X',
+          onPressed: () {
+            // Some code to undo the change.
+          },
+        ),
+
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       _clearAll();
       return;
     }
@@ -71,9 +101,24 @@ class _HomeStateState extends State<HomeState> {
       _clearAll();
       return;
     }
+    if(text == "." || text == ","){
+        final snackBar =  SnackBar(
+          content: const Text('Retorno Inválido!Digite novamente!'),
+          action: SnackBarAction(
+            label: 'X',
+            onPressed: () {
+              // Some code to undo the change.
+            },
+          ),
+
+        );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      _clearAll();
+      return;
+    }
     double euro = double.parse(text);
-    realController.text = (euro*this.euro).toStringAsFixed(2);
-    dolarController.text = (euro * this.euro/dolar).toStringAsFixed(2);
+    realController.text = (euro * this.euro).toStringAsFixed(2);
+    dolarController.text = ((euro * this.euro) / dolar).toStringAsFixed(2);
   }
 
 
@@ -150,7 +195,11 @@ Widget buildTextfield(String label,String prefix,TextEditingController controlle
         color: Colors.amber,
         fontSize: 25.0
     ),
-    onChanged:(value)=>f(value),
-    keyboardType: TextInputType.number,
+    onChanged:(value){
+      if(value != null){
+        f(value);
+      }
+    },
+    keyboardType: TextInputType.numberWithOptions(decimal:true),
   );
 }
